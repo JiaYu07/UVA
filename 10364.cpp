@@ -5,22 +5,23 @@ using namespace std;
 int t, m, msg[25],  Max, sum,edge_len;
 bool use[25]={0};
 bool dfs( int start, int complete,int tmp_sum){
-    if (complete == 4)return true;
+    if (complete == 3)return true;
     if(tmp_sum==edge_len)
-        if(dfs(0,complete++,0))return true;
+        if(dfs(0,++complete,0))return true;
 
     for (int i = start; i < m; i++){
         if (use[i] == 0){
             use[i] = 1;
-            if (dfs( i + 1, complete,msg[i]+tmp_sum))return true;                
+            if(msg[i]<=edge_len-tmp_sum)//otherwise will TLE!!!!!
+                if (dfs( i + 1, complete,msg[i]+tmp_sum))
+                    return true;                
             use[i] = 0;
         }
      }    
     return false;
 }
 
-int main()
-{
+int main(){
     cin>>t;
     while (t--){
         Max = 0;
